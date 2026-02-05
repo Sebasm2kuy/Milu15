@@ -46,15 +46,15 @@ const MemoryCollage = ({
     1: (
       <div className="memory-collage relative w-full h-[320px] md:h-[500px] animate-drift-slow" aria-hidden="true">
         {/* Foto izquierda - patinando */}
-        <div className="memory-layer mask-fade-left absolute -left-8 md:-left-16 top-4 md:top-0 w-[65%] h-[90%] opacity-40">
+        <div className="memory-layer mask-fade-left absolute -left-8 md:-left-16 top-4 md:top-0 w-[65%] h-[90%] opacity-60">
           <img src={PHOTOS[1].src} alt="" loading="lazy" className="rounded-none" />
         </div>
         {/* Foto derecha - camara */}
-        <div className="memory-layer mask-fade-right absolute -right-8 md:-right-16 bottom-4 md:bottom-0 w-[65%] h-[90%] opacity-35">
+        <div className="memory-layer mask-fade-right absolute -right-8 md:-right-16 bottom-4 md:bottom-0 w-[65%] h-[90%] opacity-55">
           <img src={PHOTOS[2].src} alt="" loading="lazy" className="rounded-none" />
         </div>
         {/* Foto centro - vestido (mas prominente) */}
-        <div className="memory-layer mask-fade absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-full opacity-50">
+        <div className="memory-layer mask-fade absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-full opacity-70">
           <img src={PHOTOS[0].src} alt="" loading="lazy" className="rounded-none" />
         </div>
         {/* Resplandor bordeaux sutil */}
