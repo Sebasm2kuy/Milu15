@@ -35,54 +35,58 @@ const PHOTOS = [
   { src: '/photos/milu-camara.jpg', alt: 'Milagros con una camara de pequena' },
 ];
 
-type FragmentShape = 'diamond' | 'hexagon' | 'parallelogram' | 'trapezoid' | 'rounded';
-type FragmentPosition = 'left' | 'right' | 'center';
-
-const PhotoFragment = ({ 
-  photo, 
-  shape = 'diamond', 
-  position = 'right',
-  size = 'md',
-  animationClass = 'animate-drift-slow',
+/* Collage de fotos superpuestas con bordes difusos que se funden entre si */
+const MemoryCollage = ({ 
+  variant = 1 
 }: { 
-  photo: typeof PHOTOS[0]; 
-  shape?: FragmentShape; 
-  position?: FragmentPosition;
-  size?: 'sm' | 'md' | 'lg';
-  animationClass?: string;
+  variant?: 1 | 2 | 3 
 }) => {
-  const shapeClass = {
-    diamond: 'clip-diamond',
-    hexagon: 'clip-hexagon',
-    parallelogram: 'clip-parallelogram',
-    trapezoid: 'clip-trapezoid',
-    rounded: 'rounded-[2rem] md:rounded-[3rem]',
-  }[shape];
-
-  const sizeClass = {
-    sm: 'w-28 h-28 md:w-40 md:h-40',
-    md: 'w-36 h-36 md:w-56 md:h-56',
-    lg: 'w-44 h-44 md:w-72 md:h-72',
-  }[size];
-
-  const positionClass = {
-    left: 'mr-auto -ml-4 md:-ml-10',
-    right: 'ml-auto -mr-4 md:-mr-10',
-    center: 'mx-auto',
-  }[position];
-
-  return (
-    <div className={`relative ${positionClass} ${animationClass}`} aria-hidden="true">
-      <div className={`photo-fragment ${shapeClass} ${sizeClass} glow-bordeaux`}>
-        <img src={photo.src} alt={photo.alt} loading="lazy" />
+  const layouts: Record<number, React.ReactNode> = {
+    /* Variante 1: Las 3 fotos superpuestas, la del vestido al centro mas grande */
+    1: (
+      <div className="memory-collage relative w-full h-[320px] md:h-[500px] animate-drift-slow" aria-hidden="true">
+        {/* Foto izquierda - patinando */}
+        <div className="memory-layer mask-fade-left absolute -left-8 md:-left-16 top-4 md:top-0 w-[65%] h-[90%] opacity-40">
+          <img src={PHOTOS[1].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Foto derecha - camara */}
+        <div className="memory-layer mask-fade-right absolute -right-8 md:-right-16 bottom-4 md:bottom-0 w-[65%] h-[90%] opacity-35">
+          <img src={PHOTOS[2].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Foto centro - vestido (mas prominente) */}
+        <div className="memory-layer mask-fade absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-full opacity-50">
+          <img src={PHOTOS[0].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Resplandor bordeaux sutil */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(109,11,11,0.15) 0%, transparent 60%)' }} />
       </div>
-      {/* Glow reflection */}
-      <div 
-        className={`absolute inset-0 ${shapeClass} ${sizeClass} opacity-30 blur-2xl -z-10 scale-110`}
-        style={{ background: 'radial-gradient(circle, rgba(109,11,11,0.5) 0%, transparent 70%)' }}
-      />
-    </div>
-  );
+    ),
+    /* Variante 2: Dos fotos de nina superpuestas, desplazadas */
+    2: (
+      <div className="memory-collage relative w-full h-[250px] md:h-[400px] animate-drift-slow-delay" aria-hidden="true">
+        {/* Foto patinando */}
+        <div className="memory-layer mask-fade-left absolute left-0 md:-left-10 top-0 w-[70%] h-full opacity-40">
+          <img src={PHOTOS[1].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Foto camara, superpuesta */}
+        <div className="memory-layer mask-fade-right absolute right-0 md:-right-10 top-0 w-[70%] h-full opacity-40">
+          <img src={PHOTOS[2].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(109,11,11,0.1) 0%, transparent 55%)' }} />
+      </div>
+    ),
+    /* Variante 3: Solo vestido, ancho completo, muy sutil */
+    3: (
+      <div className="memory-collage relative w-full h-[200px] md:h-[350px] animate-drift-slow-delay-2" aria-hidden="true">
+        <div className="memory-layer mask-fade-wide absolute inset-0 w-full h-full opacity-30">
+          <img src={PHOTOS[0].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(109,11,11,0.12) 0%, transparent 50%)' }} />
+      </div>
+    ),
+  };
+
+  return layouts[variant] || null;
 };
 
 const App = () => {
@@ -240,9 +244,9 @@ const App = () => {
         </div>
       </header>
 
-      {/* FRAGMENTO LUMINOSO 1 - Vestido (entre hero y gala) */}
-      <div className="relative -mt-20 mb-8 md:-mt-32 md:mb-12 max-w-4xl mx-auto px-4 md:px-8">
-        <PhotoFragment photo={PHOTOS[0]} shape="diamond" position="right" size="lg" animationClass="animate-drift-slow" />
+      {/* FOTOS SUPERPUESTAS 1 - Las 3 fotos fundidas (entre hero y gala) */}
+      <div className="relative -mt-16 mb-0 md:-mt-28 md:mb-4 max-w-5xl mx-auto overflow-hidden">
+        <MemoryCollage variant={1} />
       </div>
 
       <main role="main" className="max-w-4xl mx-auto px-4 md:px-8 space-y-32 md:space-y-48">
@@ -306,9 +310,9 @@ const App = () => {
           </div>
         </section>
 
-        {/* FRAGMENTO LUMINOSO 2 - Patinando (entre gala y recuerdos) */}
-        <div className="relative flex items-center justify-start -my-8 md:-my-16">
-          <PhotoFragment photo={PHOTOS[1]} shape="hexagon" position="left" size="md" animationClass="animate-drift-slow-delay" />
+        {/* FOTOS SUPERPUESTAS 2 - Ninas fundidas (entre gala y recuerdos) */}
+        <div className="relative -my-12 md:-my-20 overflow-hidden">
+          <MemoryCollage variant={2} />
         </div>
 
         {/* SECCIÓN 2: RECUERDOS */}
@@ -367,9 +371,9 @@ const App = () => {
           </div>
         </section>
 
-        {/* FRAGMENTO LUMINOSO 3 - Camara (entre recuerdos y musica) */}
-        <div className="relative flex items-center justify-end -my-8 md:-my-16">
-          <PhotoFragment photo={PHOTOS[2]} shape="parallelogram" position="right" size="md" animationClass="animate-drift-slow-delay-2" />
+        {/* FOTOS SUPERPUESTAS 3 - Vestido sutil (entre recuerdos y musica) */}
+        <div className="relative -my-12 md:-my-20 overflow-hidden">
+          <MemoryCollage variant={3} />
         </div>
 
         {/* SECCIÓN 3: RITMO */}
@@ -417,9 +421,9 @@ const App = () => {
           </div>
         </section>
 
-        {/* FRAGMENTO LUMINOSO 4 - Vestido (entre musica y RSVP) */}
-        <div className="relative flex items-center justify-center -my-8 md:-my-16">
-          <PhotoFragment photo={PHOTOS[0]} shape="rounded" position="center" size="sm" animationClass="animate-glow-pulse" />
+        {/* FOTOS SUPERPUESTAS 4 - Ninas fundidas (entre musica y RSVP) */}
+        <div className="relative -my-12 md:-my-20 overflow-hidden">
+          <MemoryCollage variant={2} />
         </div>
 
         {/* SECCIÓN 4: RSVP + REGALO */}

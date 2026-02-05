@@ -120,69 +120,42 @@
             50% { opacity: 0.4; transform: scale(1.3); }
         }
         
-        /* Fragmentos Luminosos */
-        .photo-fragment {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .photo-fragment::before {
-            content: '';
+        /* Fotos Superpuestas - Efecto Recuerdos */
+        .memory-layer {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(109,11,11,0.4) 0%, transparent 50%, rgba(109,11,11,0.2) 100%);
-            z-index: 2;
             pointer-events: none;
-            transition: opacity 0.6s ease;
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
-        .photo-fragment:hover::before {
-            opacity: 0.3;
-        }
-        .photo-fragment::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, rgba(109,11,11,0.6), transparent 40%, rgba(109,11,11,0.3));
-            z-index: -1;
-            border-radius: inherit;
-            filter: blur(8px);
-            opacity: 0.6;
-            transition: opacity 0.6s ease, filter 0.6s ease;
-        }
-        .photo-fragment:hover::after {
-            opacity: 1;
-            filter: blur(16px);
-        }
-        .photo-fragment img {
+        .memory-layer img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1), filter 0.8s ease;
-            filter: brightness(0.7) contrast(1.1) saturate(0.8);
+            filter: brightness(0.5) contrast(1.1) saturate(0.6);
+            transition: filter 2s ease;
         }
-        .photo-fragment:hover img {
-            transform: scale(1.08);
-            filter: brightness(0.85) contrast(1.05) saturate(1);
+        .memory-collage:hover .memory-layer img {
+            filter: brightness(0.6) contrast(1.05) saturate(0.8);
         }
-        
-        .clip-diamond {
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        /* Mascara radial para bordes difusos */
+        .mask-fade {
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
         }
-        .clip-hexagon {
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        .mask-fade-left {
+            -webkit-mask-image: radial-gradient(ellipse at 30% 50%, black 15%, transparent 65%);
+            mask-image: radial-gradient(ellipse at 30% 50%, black 15%, transparent 65%);
         }
-        .clip-parallelogram {
-            clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+        .mask-fade-right {
+            -webkit-mask-image: radial-gradient(ellipse at 70% 50%, black 15%, transparent 65%);
+            mask-image: radial-gradient(ellipse at 70% 50%, black 15%, transparent 65%);
         }
-        .clip-trapezoid {
-            clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+        .mask-fade-top {
+            -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 15%, transparent 65%);
+            mask-image: radial-gradient(ellipse at 50% 30%, black 15%, transparent 65%);
         }
-        
-        .glow-bordeaux {
-            box-shadow: 0 0 40px rgba(109,11,11,0.4), 0 0 80px rgba(109,11,11,0.15), inset 0 0 30px rgba(0,0,0,0.3);
-        }
-        .glow-bordeaux:hover {
-            box-shadow: 0 0 60px rgba(109,11,11,0.6), 0 0 120px rgba(109,11,11,0.25), inset 0 0 30px rgba(0,0,0,0.2);
+        .mask-fade-wide {
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at center, black 10%, transparent 60%);
+            mask-image: radial-gradient(ellipse 80% 60% at center, black 10%, transparent 60%);
         }
 
         /* Screen reader only */
