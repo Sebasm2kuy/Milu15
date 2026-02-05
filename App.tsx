@@ -29,6 +29,66 @@ const EVENT_ADDRESS = "Granaderos 3875, 12300 Montevideo";
 const MAPS_EMBED = "https://maps.google.com/maps?q=Salón%20My%20Father%2C%20Granaderos%203875%2C%20Montevideo&t=&z=17&ie=UTF8&iwloc=&output=embed";
 const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/4RAVjizGdBtJx18kkwttqn?utm_source=generator&theme=0";
 
+const PHOTOS = [
+  { src: '/photos/milu-vestido.jpg', alt: 'Milagros con su vestido de XV' },
+  { src: '/photos/milu-patinando.jpg', alt: 'Milagros patinando de pequena' },
+  { src: '/photos/milu-camara.jpg', alt: 'Milagros con una camara de pequena' },
+];
+
+/* Collage de fotos superpuestas con bordes difusos que se funden entre si */
+const MemoryCollage = ({ 
+  variant = 1 
+}: { 
+  variant?: 1 | 2 | 3 
+}) => {
+  const layouts: Record<number, React.ReactNode> = {
+    /* Variante 1: Las 3 fotos superpuestas, la del vestido al centro mas grande */
+    1: (
+      <div className="memory-collage relative w-full h-[320px] md:h-[500px] animate-drift-slow" aria-hidden="true">
+        {/* Foto izquierda - patinando */}
+        <div className="memory-layer mask-fade-left absolute -left-8 md:-left-16 top-4 md:top-0 w-[65%] h-[90%] opacity-60">
+          <img src={PHOTOS[1].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Foto derecha - camara */}
+        <div className="memory-layer mask-fade-right absolute -right-8 md:-right-16 bottom-4 md:bottom-0 w-[65%] h-[90%] opacity-55">
+          <img src={PHOTOS[2].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Foto centro - vestido (mas prominente) */}
+        <div className="memory-layer mask-fade absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-full opacity-70">
+          <img src={PHOTOS[0].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Resplandor bordeaux sutil */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(109,11,11,0.15) 0%, transparent 60%)' }} />
+      </div>
+    ),
+    /* Variante 2: Dos fotos de nina superpuestas, desplazadas */
+    2: (
+      <div className="memory-collage relative w-full h-[250px] md:h-[400px] animate-drift-slow-delay" aria-hidden="true">
+        {/* Foto patinando */}
+        <div className="memory-layer mask-fade-left absolute left-0 md:-left-10 top-0 w-[70%] h-full opacity-40">
+          <img src={PHOTOS[1].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        {/* Foto camara, superpuesta */}
+        <div className="memory-layer mask-fade-right absolute right-0 md:-right-10 top-0 w-[70%] h-full opacity-40">
+          <img src={PHOTOS[2].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(109,11,11,0.1) 0%, transparent 55%)' }} />
+      </div>
+    ),
+    /* Variante 3: Solo vestido, ancho completo, muy sutil */
+    3: (
+      <div className="memory-collage relative w-full h-[200px] md:h-[350px] animate-drift-slow-delay-2" aria-hidden="true">
+        <div className="memory-layer mask-fade-wide absolute inset-0 w-full h-full opacity-30">
+          <img src={PHOTOS[0].src} alt="" loading="lazy" className="rounded-none" />
+        </div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(109,11,11,0.12) 0%, transparent 50%)' }} />
+      </div>
+    ),
+  };
+
+  return layouts[variant] || null;
+};
+
 const App = () => {
   const [isOpened, setIsOpened] = useState(false);
   const [envelopeClosing, setEnvelopeClosing] = useState(false);
@@ -184,6 +244,11 @@ const App = () => {
         </div>
       </header>
 
+      {/* FOTOS SUPERPUESTAS 1 - Las 3 fotos fundidas (entre hero y gala) */}
+      <div className="relative -mt-16 mb-0 md:-mt-28 md:mb-4 max-w-5xl mx-auto overflow-hidden">
+        <MemoryCollage variant={1} />
+      </div>
+
       <main role="main" className="max-w-4xl mx-auto px-4 md:px-8 space-y-32 md:space-y-48">
         
         {/* SECCIÓN 1: LA GALA */}
@@ -245,6 +310,11 @@ const App = () => {
           </div>
         </section>
 
+        {/* FOTOS SUPERPUESTAS 2 - Ninas fundidas (entre gala y recuerdos) */}
+        <div className="relative -my-12 md:-my-20 overflow-hidden">
+          <MemoryCollage variant={2} />
+        </div>
+
         {/* SECCIÓN 2: RECUERDOS */}
         <section ref={recuerdosRef} className="pt-10">
           <div className="text-center mb-12 md:mb-16">
@@ -301,6 +371,11 @@ const App = () => {
           </div>
         </section>
 
+        {/* FOTOS SUPERPUESTAS 3 - Vestido sutil (entre recuerdos y musica) */}
+        <div className="relative -my-12 md:-my-20 overflow-hidden">
+          <MemoryCollage variant={3} />
+        </div>
+
         {/* SECCIÓN 3: RITMO */}
         <section ref={musicaRef} className="pt-10">
           <div className="glass p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] border-white/10 bg-gradient-to-t from-white/[0.03] to-transparent">
@@ -346,6 +421,11 @@ const App = () => {
           </div>
         </section>
 
+        {/* FOTOS SUPERPUESTAS 4 - Ninas fundidas (entre musica y RSVP) */}
+        <div className="relative -my-12 md:-my-20 overflow-hidden">
+          <MemoryCollage variant={2} />
+        </div>
+
         {/* SECCIÓN 4: RSVP + REGALO */}
         <section ref={rsvpRef} className="pt-10 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 pb-20">
           {/* RSVP */}
@@ -360,8 +440,8 @@ const App = () => {
                     type="text" 
                     value={guestName} 
                     onChange={(e) => setGuestName(e.target.value)} 
-                    placeholder="Tu nombre y apellido" 
-                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl md:rounded-3xl px-8 py-6 text-center text-base md:text-xl focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 outline-none tracking-widest shadow-inner placeholder:text-silver/20" 
+                    placeholder="Nombre y Apellido" 
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl md:rounded-3xl px-4 md:px-8 py-6 text-center text-sm md:text-xl focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 outline-none tracking-wide md:tracking-widest shadow-inner placeholder:text-silver/30 placeholder:tracking-normal md:placeholder:tracking-wide" 
                   />
                   <button 
                     onClick={() => { if(guestName.length < 3) return; window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=Hola+Milu,+confirmo+asistencia.+Soy+${guestName}`, '_blank'); setIsConfirmed(true); }} 
