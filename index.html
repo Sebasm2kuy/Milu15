@@ -2,7 +2,12 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Invitacion digital a los XV anos de Milagros Cabrera - 22 de Agosto 2026, Salon My Father, Montevideo, Uruguay">
+    <meta name="theme-color" content="#6d0b0b">
+    <meta property="og:title" content="Mis XV - Milagros Cabrera">
+    <meta property="og:description" content="Estas invitado a celebrar los XV anos de Milagros - 22 de Agosto 2026">
+    <meta property="og:type" content="website">
     <title>Mis XV - Milagros Cabrera</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -14,16 +19,26 @@
               bordeaux: '#6d0b0b',
               silver: '#c0c0c0',
             },
-            animation: {
-              'spin-slow': 'spin 12s linear infinite',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'float': 'float 6s ease-in-out infinite',
-            },
             keyframes: {
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-10px)' },
+              },
+              'fade-in': {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'fade-up': {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               }
+            },
+            animation: {
+              'spin-slow': 'spin 12s linear infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'fade-in': 'fade-in 0.6s ease-out forwards',
+              'fade-up': 'fade-up 0.8s ease-out forwards',
             }
           }
         }
@@ -90,6 +105,37 @@
         @keyframes twinkle {
             0%, 100% { opacity: 0.1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(1.3); }
+        }
+        
+        /* Screen reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* Focus visible styling */
+        *:focus-visible {
+            outline: 2px solid var(--bordeaux);
+            outline-offset: 2px;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Better text rendering */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
     </style>
 <script type="importmap">
