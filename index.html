@@ -31,6 +31,15 @@
               'fade-up': {
                 '0%': { opacity: '0', transform: 'translateY(20px)' },
                 '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'glow-pulse': {
+                '0%, 100%': { opacity: '0.5', filter: 'brightness(0.7)' },
+                '50%': { opacity: '0.9', filter: 'brightness(1)' },
+              },
+              'drift-slow': {
+                '0%': { transform: 'translateY(0) rotate(0deg)' },
+                '50%': { transform: 'translateY(-8px) rotate(1deg)' },
+                '100%': { transform: 'translateY(0) rotate(0deg)' },
               }
             },
             animation: {
@@ -39,6 +48,10 @@
               'float': 'float 6s ease-in-out infinite',
               'fade-in': 'fade-in 0.6s ease-out forwards',
               'fade-up': 'fade-up 0.8s ease-out forwards',
+              'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+              'drift-slow': 'drift-slow 8s ease-in-out infinite',
+              'drift-slow-delay': 'drift-slow 10s ease-in-out 2s infinite',
+              'drift-slow-delay-2': 'drift-slow 12s ease-in-out 4s infinite',
             }
           }
         }
@@ -107,6 +120,71 @@
             50% { opacity: 0.4; transform: scale(1.3); }
         }
         
+        /* Fragmentos Luminosos */
+        .photo-fragment {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .photo-fragment::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(109,11,11,0.4) 0%, transparent 50%, rgba(109,11,11,0.2) 100%);
+            z-index: 2;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+        .photo-fragment:hover::before {
+            opacity: 0.3;
+        }
+        .photo-fragment::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(109,11,11,0.6), transparent 40%, rgba(109,11,11,0.3));
+            z-index: -1;
+            border-radius: inherit;
+            filter: blur(8px);
+            opacity: 0.6;
+            transition: opacity 0.6s ease, filter 0.6s ease;
+        }
+        .photo-fragment:hover::after {
+            opacity: 1;
+            filter: blur(16px);
+        }
+        .photo-fragment img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1), filter 0.8s ease;
+            filter: brightness(0.7) contrast(1.1) saturate(0.8);
+        }
+        .photo-fragment:hover img {
+            transform: scale(1.08);
+            filter: brightness(0.85) contrast(1.05) saturate(1);
+        }
+        
+        .clip-diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        .clip-hexagon {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+        .clip-parallelogram {
+            clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+        }
+        .clip-trapezoid {
+            clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+        }
+        
+        .glow-bordeaux {
+            box-shadow: 0 0 40px rgba(109,11,11,0.4), 0 0 80px rgba(109,11,11,0.15), inset 0 0 30px rgba(0,0,0,0.3);
+        }
+        .glow-bordeaux:hover {
+            box-shadow: 0 0 60px rgba(109,11,11,0.6), 0 0 120px rgba(109,11,11,0.25), inset 0 0 30px rgba(0,0,0,0.2);
+        }
+
         /* Screen reader only */
         .sr-only {
             position: absolute;
@@ -153,6 +231,21 @@
 </head>
 <body>
     <div class="nebula"></div>
+    <!-- Estrellas decorativas -->
+    <div class="stars-container" aria-hidden="true">
+      <script>
+        (function() {
+          const c = document.querySelector('.stars-container');
+          for (let i = 0; i < 60; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const size = Math.random() * 2 + 1;
+            s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--duration:${Math.random()*4+2}s;animation-delay:${Math.random()*4}s`;
+            c.appendChild(s);
+          }
+        })();
+      </script>
+    </div>
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>

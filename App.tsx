@@ -29,6 +29,62 @@ const EVENT_ADDRESS = "Granaderos 3875, 12300 Montevideo";
 const MAPS_EMBED = "https://maps.google.com/maps?q=Salón%20My%20Father%2C%20Granaderos%203875%2C%20Montevideo&t=&z=17&ie=UTF8&iwloc=&output=embed";
 const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/4RAVjizGdBtJx18kkwttqn?utm_source=generator&theme=0";
 
+const PHOTOS = [
+  { src: '/photos/milu-vestido.jpg', alt: 'Milagros con su vestido de XV' },
+  { src: '/photos/milu-patinando.jpg', alt: 'Milagros patinando de pequena' },
+  { src: '/photos/milu-camara.jpg', alt: 'Milagros con una camara de pequena' },
+];
+
+type FragmentShape = 'diamond' | 'hexagon' | 'parallelogram' | 'trapezoid' | 'rounded';
+type FragmentPosition = 'left' | 'right' | 'center';
+
+const PhotoFragment = ({ 
+  photo, 
+  shape = 'diamond', 
+  position = 'right',
+  size = 'md',
+  animationClass = 'animate-drift-slow',
+}: { 
+  photo: typeof PHOTOS[0]; 
+  shape?: FragmentShape; 
+  position?: FragmentPosition;
+  size?: 'sm' | 'md' | 'lg';
+  animationClass?: string;
+}) => {
+  const shapeClass = {
+    diamond: 'clip-diamond',
+    hexagon: 'clip-hexagon',
+    parallelogram: 'clip-parallelogram',
+    trapezoid: 'clip-trapezoid',
+    rounded: 'rounded-[2rem] md:rounded-[3rem]',
+  }[shape];
+
+  const sizeClass = {
+    sm: 'w-28 h-28 md:w-40 md:h-40',
+    md: 'w-36 h-36 md:w-56 md:h-56',
+    lg: 'w-44 h-44 md:w-72 md:h-72',
+  }[size];
+
+  const positionClass = {
+    left: 'mr-auto -ml-4 md:-ml-10',
+    right: 'ml-auto -mr-4 md:-mr-10',
+    center: 'mx-auto',
+  }[position];
+
+  return (
+    <div className={`relative ${positionClass} ${animationClass}`} aria-hidden="true">
+      <div className={`photo-fragment ${shapeClass} ${sizeClass} glow-bordeaux`}>
+        <img src={photo.src} alt={photo.alt} loading="lazy" />
+      </div>
+      {/* Glow reflection */}
+      <div 
+        className={`absolute inset-0 ${shapeClass} ${sizeClass} opacity-30 blur-2xl -z-10 scale-110`}
+        style={{ background: 'radial-gradient(circle, rgba(109,11,11,0.5) 0%, transparent 70%)' }}
+      />
+    </div>
+  );
+};
+
 const App = () => {
   const [isOpened, setIsOpened] = useState(false);
   const [envelopeClosing, setEnvelopeClosing] = useState(false);
@@ -184,6 +240,11 @@ const App = () => {
         </div>
       </header>
 
+      {/* FRAGMENTO LUMINOSO 1 - Vestido (entre hero y gala) */}
+      <div className="relative -mt-20 mb-8 md:-mt-32 md:mb-12 max-w-4xl mx-auto px-4 md:px-8">
+        <PhotoFragment photo={PHOTOS[0]} shape="diamond" position="right" size="lg" animationClass="animate-drift-slow" />
+      </div>
+
       <main role="main" className="max-w-4xl mx-auto px-4 md:px-8 space-y-32 md:space-y-48">
         
         {/* SECCIÓN 1: LA GALA */}
@@ -245,6 +306,11 @@ const App = () => {
           </div>
         </section>
 
+        {/* FRAGMENTO LUMINOSO 2 - Patinando (entre gala y recuerdos) */}
+        <div className="relative flex items-center justify-start -my-8 md:-my-16">
+          <PhotoFragment photo={PHOTOS[1]} shape="hexagon" position="left" size="md" animationClass="animate-drift-slow-delay" />
+        </div>
+
         {/* SECCIÓN 2: RECUERDOS */}
         <section ref={recuerdosRef} className="pt-10">
           <div className="text-center mb-12 md:mb-16">
@@ -301,6 +367,11 @@ const App = () => {
           </div>
         </section>
 
+        {/* FRAGMENTO LUMINOSO 3 - Camara (entre recuerdos y musica) */}
+        <div className="relative flex items-center justify-end -my-8 md:-my-16">
+          <PhotoFragment photo={PHOTOS[2]} shape="parallelogram" position="right" size="md" animationClass="animate-drift-slow-delay-2" />
+        </div>
+
         {/* SECCIÓN 3: RITMO */}
         <section ref={musicaRef} className="pt-10">
           <div className="glass p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] border-white/10 bg-gradient-to-t from-white/[0.03] to-transparent">
@@ -345,6 +416,11 @@ const App = () => {
             </div>
           </div>
         </section>
+
+        {/* FRAGMENTO LUMINOSO 4 - Vestido (entre musica y RSVP) */}
+        <div className="relative flex items-center justify-center -my-8 md:-my-16">
+          <PhotoFragment photo={PHOTOS[0]} shape="rounded" position="center" size="sm" animationClass="animate-glow-pulse" />
+        </div>
 
         {/* SECCIÓN 4: RSVP + REGALO */}
         <section ref={rsvpRef} className="pt-10 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 pb-20">
