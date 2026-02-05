@@ -148,9 +148,10 @@ const App = () => {
           <div className="font-cursive text-7xl md:text-9xl text-white mb-10 tracking-[0.1em] animate-pulse leading-none">Milagros</div>
           <button 
             onClick={() => { setEnvelopeClosing(true); setTimeout(() => setIsOpened(true), 800); }} 
-            className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-[#6D0B0B] to-black rounded-full flex items-center justify-center border-2 border-white/20 shadow-[0_0_80px_rgba(109,11,11,0.9)] active:scale-95 transition-all hover:scale-110 mx-auto"
+            aria-label="Abrir invitacion"
+            className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-[#6D0B0B] to-black rounded-full flex items-center justify-center border-2 border-white/20 shadow-[0_0_80px_rgba(109,11,11,0.9)] active:scale-95 transition-all hover:scale-110 mx-auto focus:outline-none focus-visible:ring-4 focus-visible:ring-white/50"
           >
-            <span className="font-serif font-bold text-white/70 text-4xl md:text-6xl">M</span>
+            <span className="font-serif font-bold text-white/70 text-4xl md:text-6xl" aria-hidden="true">M</span>
           </button>
           <p className="mt-12 text-silver/40 text-[10px] md:text-xs uppercase tracking-[1em]">Toca para abrir</p>
         </div>
@@ -162,15 +163,15 @@ const App = () => {
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#6D0B0B] selection:text-white pb-32">
       
       {/* NAV BAR FLOTANTE */}
-      <nav className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-[999] glass rounded-full px-5 md:px-10 py-4 md:py-6 flex gap-6 md:gap-12 items-center border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-3xl animate-fade-in w-max">
-        <button onClick={() => scrollTo(galaRef)} className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux outline-none"><Calendar size={22}/></button>
-        <button onClick={() => scrollTo(recuerdosRef)} className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux outline-none"><ImageIcon size={22}/></button>
-        <button onClick={() => scrollTo(musicaRef)} className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux outline-none"><Music size={22}/></button>
-        <button onClick={() => scrollTo(rsvpRef)} className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux outline-none"><CheckCircle size={22}/></button>
+      <nav aria-label="Navegacion principal" className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-[999] glass rounded-full px-5 md:px-10 py-4 md:py-6 flex gap-6 md:gap-12 items-center border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-3xl animate-fade-in w-max">
+        <button onClick={() => scrollTo(galaRef)} aria-label="Ir a la seccion de la gala" className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux focus:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full p-1"><Calendar size={22}/></button>
+        <button onClick={() => scrollTo(recuerdosRef)} aria-label="Ir a la seccion de recuerdos" className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux focus:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full p-1"><ImageIcon size={22}/></button>
+        <button onClick={() => scrollTo(musicaRef)} aria-label="Ir a la seccion de musica" className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux focus:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full p-1"><Music size={22}/></button>
+        <button onClick={() => scrollTo(rsvpRef)} aria-label="Ir a la seccion de confirmacion" className="text-white/60 hover:text-bordeaux transition-all hover:scale-125 focus:text-bordeaux focus:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full p-1"><CheckCircle size={22}/></button>
       </nav>
 
       {/* PORTADA HERO */}
-      <header className="h-screen flex flex-col items-center justify-center relative px-6 text-center">
+      <header role="banner" className="h-screen flex flex-col items-center justify-center relative px-6 text-center">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505] z-10"></div>
         <div className="z-20 animate-fade-in w-full max-w-4xl">
           <p className="text-bordeaux uppercase tracking-[0.8em] text-lg md:text-3xl mb-4 font-bold drop-shadow-lg">Mis XV</p>
@@ -183,17 +184,17 @@ const App = () => {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 md:px-8 space-y-32 md:space-y-48">
+      <main role="main" className="max-w-4xl mx-auto px-4 md:px-8 space-y-32 md:space-y-48">
         
         {/* SECCIÓN 1: LA GALA */}
         <section ref={galaRef} className="pt-10">
           <div className="glass p-6 md:p-14 rounded-[2.5rem] md:rounded-[4rem] border-white/10 relative bg-gradient-to-br from-white/[0.04] to-transparent shadow-2xl">
             {/* CUENTA REGRESIVA OPTIMIZADA */}
-            <div className="grid grid-cols-4 gap-2 md:gap-6 mb-12 md:mb-20">
-              {Object.entries(timeLeft).map(([label, val], i) => (
+            <div role="timer" aria-label="Cuenta regresiva para el evento" className="grid grid-cols-4 gap-2 md:gap-6 mb-12 md:mb-20">
+              {Object.entries(timeLeft).map(([label, val]) => (
                 <div key={label} className="flex flex-col items-center justify-center bg-white/[0.03] rounded-2xl md:rounded-3xl py-4 md:py-8 border border-white/5 aspect-square md:aspect-auto">
-                  <span className="text-2xl sm:text-3xl md:text-7xl font-light text-white leading-none tabular-nums group-hover:text-bordeaux transition-all duration-500">{val}</span>
-                  <span className="text-[9px] md:text-xs uppercase text-silver/40 tracking-widest font-bold mt-2">{label === 'D' ? 'Días' : label === 'H' ? 'Hrs' : label === 'M' ? 'Min' : 'Seg'}</span>
+                  <span aria-live="polite" className="text-2xl sm:text-3xl md:text-7xl font-light text-white leading-none tabular-nums group-hover:text-bordeaux transition-all duration-500">{val}</span>
+                  <span className="text-[9px] md:text-xs uppercase text-silver/40 tracking-widest font-bold mt-2">{label === 'D' ? 'Dias' : label === 'H' ? 'Hrs' : label === 'M' ? 'Min' : 'Seg'}</span>
                 </div>
               ))}
             </div>
@@ -223,19 +224,23 @@ const App = () => {
                   <MapPin size={24} className="text-bordeaux md:w-8 md:h-8" />
                   <p className="text-white text-xs md:text-lg font-bold uppercase tracking-[0.2em] md:tracking-[0.4em]">Salón My Father</p>
                 </div>
-                <button onClick={() => window.open(`https://maps.app.goo.gl/uXq5HCuF54u8DqJj8`, '_blank')} 
-                  className="bg-bordeaux px-5 md:px-8 py-2 md:py-3 rounded-full text-white text-[10px] md:text-xs uppercase font-bold flex items-center gap-3 hover:bg-white hover:text-black transition-all shadow-lg">
-                  VER MAPA <ExternalLink size={14} />
+                <button 
+                  onClick={() => window.open(`https://maps.app.goo.gl/uXq5HCuF54u8DqJj8`, '_blank')} 
+                  aria-label="Ver ubicacion del Salon My Father en Google Maps (abre en nueva ventana)"
+                  className="bg-bordeaux px-5 md:px-8 py-2 md:py-3 rounded-full text-white text-[10px] md:text-xs uppercase font-bold flex items-center gap-3 hover:bg-white hover:text-black transition-all shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                  VER MAPA <ExternalLink size={14} aria-hidden="true" />
                 </button>
               </div>
               <div className="h-64 md:h-96 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden border border-white/10 grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 shadow-inner">
-                <iframe src={MAPS_EMBED} className="w-full h-full border-0" allowFullScreen loading="lazy"></iframe>
+                <iframe src={MAPS_EMBED} title="Mapa de ubicacion del Salon My Father" className="w-full h-full border-0" allowFullScreen loading="lazy"></iframe>
               </div>
             </div>
 
-            <button onClick={() => window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+-+Milagros&dates=20260822T210000/20260823T050000&location=Salón+My+Father`, '_blank')} 
-              className="mt-12 md:mt-16 w-full bg-white text-black font-bold py-5 md:py-7 rounded-2xl md:rounded-[2.5rem] text-[11px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.6em] flex items-center justify-center gap-4 hover:bg-bordeaux hover:text-white transition-all shadow-2xl active:scale-[0.98]">
-              <CalendarPlus size={22} className="md:w-7 md:h-7" /> AGENDAR EVENTO
+            <button 
+              onClick={() => window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+-+Milagros&dates=20260822T210000/20260823T050000&location=Salón+My+Father`, '_blank')} 
+              aria-label="Agregar evento a Google Calendar (abre en nueva ventana)"
+              className="mt-12 md:mt-16 w-full bg-white text-black font-bold py-5 md:py-7 rounded-2xl md:rounded-[2.5rem] text-[11px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.6em] flex items-center justify-center gap-4 hover:bg-bordeaux hover:text-white transition-all shadow-2xl active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux">
+              <CalendarPlus size={22} className="md:w-7 md:h-7" aria-hidden="true" /> AGENDAR EVENTO
             </button>
           </div>
         </section>
@@ -257,7 +262,7 @@ const App = () => {
                    <ImageIcon className="text-silver/20 group-hover:text-bordeaux transition-colors w-10 h-10 md:w-16 md:h-16" />
                 </div>
                 <p className="text-silver/50 text-[11px] md:text-sm uppercase tracking-[0.2em] mb-10 font-medium">Sube tu foto favorita con ella</p>
-                <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} />
+                <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} aria-label="Seleccionar foto" />
                 <button className="bg-white/10 px-10 md:px-14 py-4 md:py-6 rounded-full text-[10px] md:text-xs uppercase tracking-[0.4em] border border-white/20 font-bold hover:bg-white hover:text-black transition-all">
                   SUBIR FOTO
                 </button>
@@ -265,7 +270,7 @@ const App = () => {
             ) : (
               <div className="space-y-8 md:space-y-12 animate-fade-in">
                 <div className="relative aspect-square md:aspect-video rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-white/10 bg-black shadow-2xl max-h-[500px] flex items-center justify-center">
-                  <img src={selectedImage} className="max-w-full max-h-full object-contain" alt="Recuerdo" />
+                  <img src={selectedImage} className="max-w-full max-h-full object-contain" alt="Foto de recuerdo seleccionada para compartir con Milagros" />
                   {isAnalyzing && (
                     <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center backdrop-blur-xl">
                       <Loader2 className="text-bordeaux mb-6 animate-spin w-12 h-12 md:w-16 md:h-16" />
@@ -304,16 +309,18 @@ const App = () => {
               <p className="text-silver/40 text-[10px] md:text-xs uppercase tracking-[0.4em]">¿Qué canción quieres bailar?</p>
             </div>
 
-            <form onSubmit={handleSearchSongs} className="relative mb-12 group">
+            <form onSubmit={handleSearchSongs} className="relative mb-12 group" role="search">
+              <label htmlFor="song-search" className="sr-only">Buscar canciones</label>
               <input 
+                id="song-search"
                 type="text" 
                 value={searchQuery} 
                 onChange={(e) => setSearchQuery(e.target.value)} 
                 placeholder="Busca tu tema favorito..." 
-                className="w-full bg-white/[0.05] border border-white/10 rounded-full px-8 md:px-12 py-5 md:py-7 focus:outline-none focus:border-bordeaux text-white text-sm md:text-lg transition-all shadow-inner tracking-wide" 
+                className="w-full bg-white/[0.05] border border-white/10 rounded-full px-8 md:px-12 py-5 md:py-7 focus:outline-none focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 text-white text-sm md:text-lg transition-all shadow-inner tracking-wide" 
               />
-              <button type="submit" className="absolute right-3 top-2.5 md:top-3 w-12 h-12 md:w-16 md:h-16 bg-bordeaux rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 active:scale-95 transition-all">
-                {isSearching ? <Loader2 size={24} className="animate-spin" /> : <Search size={28} className="md:w-8 md:h-8" />}
+              <button type="submit" aria-label="Buscar cancion" className="absolute right-3 top-2.5 md:top-3 w-12 h-12 md:w-16 md:h-16 bg-bordeaux rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                {isSearching ? <Loader2 size={24} className="animate-spin" aria-hidden="true" /> : <Search size={28} className="md:w-8 md:h-8" aria-hidden="true" />}
               </button>
             </form>
 
@@ -333,7 +340,7 @@ const App = () => {
             <div className="pt-16 border-t border-white/10">
               <p className="text-silver/30 text-[10px] md:text-xs uppercase tracking-[0.6em] mb-12 text-center font-bold">SONIDOS QUE NOS INSPIRAN</p>
               <div className="rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl border border-white/5">
-                <iframe src={SPOTIFY_EMBED_URL} width="100%" height="450" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe src={SPOTIFY_EMBED_URL} title="Playlist de Spotify para los XV de Milagros" width="100%" height="450" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
               </div>
             </div>
           </div>
@@ -347,18 +354,22 @@ const App = () => {
               <h2 className="font-serif text-4xl md:text-6xl italic mb-10 md:mb-14">Confirmación</h2>
               {!isConfirmed ? (
                 <div className="space-y-8 md:space-y-10">
+                  <label htmlFor="guest-name" className="sr-only">Tu nombre y apellido</label>
                   <input 
+                    id="guest-name"
                     type="text" 
                     value={guestName} 
                     onChange={(e) => setGuestName(e.target.value)} 
                     placeholder="Tu nombre y apellido" 
-                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl md:rounded-3xl px-8 py-6 text-center text-base md:text-xl focus:border-bordeaux outline-none tracking-widest shadow-inner placeholder:text-silver/20" 
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl md:rounded-3xl px-8 py-6 text-center text-base md:text-xl focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 outline-none tracking-widest shadow-inner placeholder:text-silver/20" 
                   />
                   <button 
                     onClick={() => { if(guestName.length < 3) return; window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=Hola+Milu,+confirmo+asistencia.+Soy+${guestName}`, '_blank'); setIsConfirmed(true); }} 
-                    className="w-full bg-white text-black font-bold py-6 md:py-8 rounded-2xl md:rounded-3xl text-xs md:text-sm uppercase tracking-[0.4em] md:tracking-[0.6em] hover:bg-bordeaux hover:text-white transition-all shadow-2xl active:scale-95"
+                    aria-label="Confirmar asistencia via WhatsApp (abre en nueva ventana)"
+                    disabled={guestName.length < 3}
+                    className="w-full bg-white text-black font-bold py-6 md:py-8 rounded-2xl md:rounded-3xl text-xs md:text-sm uppercase tracking-[0.4em] md:tracking-[0.6em] hover:bg-bordeaux hover:text-white transition-all shadow-2xl active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Confirmar asistencia Aquí
+                    Confirmar asistencia Aqui
                   </button>
                 </div>
               ) : (
@@ -375,7 +386,7 @@ const App = () => {
 
           {/* REGALO */}
           <div className="glass p-10 md:p-16 rounded-[3rem] md:rounded-[4rem] text-center border-white/10 flex flex-col justify-center relative overflow-hidden shadow-2xl min-h-[500px]">
-            <div className="absolute -top-10 -right-10 p-10 opacity-[0.05] pointer-events-none rotate-12"><Heart size={250} className="text-bordeaux" /></div>
+            <div className="absolute -top-10 -right-10 p-10 opacity-[0.05] pointer-events-none rotate-12" aria-hidden="true"><Heart size={250} className="text-bordeaux" /></div>
             <h2 className="font-serif text-4xl md:text-6xl italic mb-8 md:mb-12">Presente</h2>
             <p className="text-silver/50 text-sm md:text-base mb-12 md:mb-20 italic leading-relaxed tracking-wide px-4 font-light max-w-sm mx-auto">
               "Mi mayor regalo es verte ese día, pero si deseas colaborar con mis sueños de futuro:"
@@ -385,12 +396,13 @@ const App = () => {
               <div className="h-px w-20 md:w-32 bg-bordeaux/40 mx-auto mb-10 group-hover:w-48 transition-all duration-700"></div>
               <button 
                 onClick={() => { navigator.clipboard.writeText("145920"); setCopiedAbitab(true); setTimeout(() => setCopiedAbitab(false), 2000); }} 
-                className="flex items-center justify-center gap-5 mx-auto text-white font-bold text-xs md:text-lg hover:text-bordeaux transition-all uppercase tracking-[0.3em] md:tracking-[0.5em] group/btn outline-none"
+                aria-label={copiedAbitab ? "Numero copiado" : "Copiar numero de Abitab 145920"}
+                className="flex items-center justify-center gap-5 mx-auto text-white font-bold text-xs md:text-lg hover:text-bordeaux transition-all uppercase tracking-[0.3em] md:tracking-[0.5em] group/btn outline-none focus-visible:ring-2 focus-visible:ring-bordeaux rounded-lg p-2"
               >
                 {copiedAbitab ? (
-                  <span className="text-green-500 flex items-center gap-3 tracking-widest">COPIADO <CheckCircle size={22}/></span>
+                  <span className="text-green-500 flex items-center gap-3 tracking-widest">COPIADO <CheckCircle size={22} aria-hidden="true" /></span>
                 ) : (
-                  <><Copy size={24} className="md:w-8 md:h-8 group-hover/btn:scale-125 transition-all" /> COPIAR NÚMERO</>
+                  <><Copy size={24} className="md:w-8 md:h-8 group-hover/btn:scale-125 transition-all" aria-hidden="true" /> COPIAR NUMERO</>
                 )}
               </button>
             </div>
@@ -399,7 +411,7 @@ const App = () => {
 
       </main>
 
-      <footer className="text-center py-48 md:py-64 border-t border-white/5 relative bg-gradient-to-b from-transparent to-black">
+      <footer role="contentinfo" className="text-center py-48 md:py-64 border-t border-white/5 relative bg-gradient-to-b from-transparent to-black">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-bordeaux/40 to-transparent"></div>
         <h2 className="font-cursive text-8xl md:text-[11rem] text-white/5 mb-12 select-none tracking-widest leading-none">Milagros</h2>
         <div className="flex items-center justify-center gap-6 md:gap-10 mb-12">
