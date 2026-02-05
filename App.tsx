@@ -360,8 +360,8 @@ const App = () => {
                     type="text" 
                     value={guestName} 
                     onChange={(e) => setGuestName(e.target.value)} 
-                    placeholder="Tu nombre y apellido" 
-                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl md:rounded-3xl px-8 py-6 text-center text-base md:text-xl focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 outline-none tracking-widest shadow-inner placeholder:text-silver/20" 
+                    placeholder="Nombre y Apellido" 
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-2xl md:rounded-3xl px-4 md:px-8 py-6 text-center text-sm md:text-xl focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 outline-none tracking-wide md:tracking-widest shadow-inner placeholder:text-silver/30 placeholder:tracking-normal md:placeholder:tracking-wide" 
                   />
                   <button 
                     onClick={() => { if(guestName.length < 3) return; window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=Hola+Milu,+confirmo+asistencia.+Soy+${guestName}`, '_blank'); setIsConfirmed(true); }} 
