@@ -13,7 +13,8 @@ import {
   Copy,
   ChevronDown,
   ExternalLink,
-  Sparkles
+  Sparkles,
+  Image as ImageIcon
 } from 'lucide-react';
 
 const EVENT_DATE = new Date('2026-08-22T21:00:00'); 
@@ -23,9 +24,9 @@ const MAPS_EMBED = "https://maps.google.com/maps?q=Salón%20My%20Father%2C%20Gra
 const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/4RAVjizGdBtJx18kkwttqn?utm_source=generator&theme=0";
 
 const PHOTOS = [
-  { src: '/photos/milu-vestido.jpg', alt: 'Milagros con su vestido de XV' },
-  { src: '/photos/milu-patinando.jpg', alt: 'Milagros patinando de pequena' },
-  { src: '/photos/milu-camara.jpg', alt: 'Milagros con una camara de pequena' },
+  { src: './photos/milu-vestido.jpg', alt: 'Milagros con su vestido de XV' },
+  { src: './photos/milu-patinando.jpg', alt: 'Milagros patinando de pequena' },
+  { src: './photos/milu-camara.jpg', alt: 'Milagros con una camara de pequena' },
 ];
 
 /* Collage de fotos superpuestas con bordes difusos que se funden entre si */
