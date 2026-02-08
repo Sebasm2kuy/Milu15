@@ -17,16 +17,18 @@ import {
   Image as ImageIcon
 } from 'lucide-react';
 
-const EVENT_DATE = new Date('2026-08-22T21:00:00'); 
-const WHATSAPP_NUMBER = "59895239386"; 
+const EVENT_DATE = new Date('2026-08-22T21:00:00');
+const WHATSAPP_NUMBER = "59895239386";
 const EVENT_ADDRESS = "Granaderos 3875, 12300 Montevideo";
-const MAPS_EMBED = "https://maps.google.com/maps?q=Salón%20My%20Father%2C%20Granaderos%203875%2C%20Montevideo&t=&z=17&ie=UTF8&iwloc=&output=embed";
+const MAPS_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3273.0951766732743!2d-56.154099!3d-34.878365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959f81c7e0ba6ea1%3A0xd4d8a2b6e8f7c5d9!2sGranaderos%203875%2C%2012300%20Montevideo!5e0!3m2!1ses!2suy!4v1707426847219!5m2!1ses!2suy";
 const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/4RAVjizGdBtJx18kkwttqn?utm_source=generator&theme=0";
 
+const BASE_PATH = import.meta.env.BASE_URL || '/';
+
 const PHOTOS = [
-  { src: './photos/milu-vestido.jpg', alt: 'Milagros con su vestido de XV' },
-  { src: './photos/milu-patinando.jpg', alt: 'Milagros patinando de pequena' },
-  { src: './photos/milu-camara.jpg', alt: 'Milagros con una camara de pequena' },
+  { src: `${BASE_PATH}photos/milu-vestido.jpg`, alt: 'Milagros con su vestido de XV' },
+  { src: `${BASE_PATH}photos/milu-patinando.jpg`, alt: 'Milagros patinando de pequena' },
+  { src: `${BASE_PATH}photos/milu-camara.jpg`, alt: 'Milagros con una camara de pequena' },
 ];
 
 /* Collage de fotos superpuestas con bordes difusos que se funden entre si */
