@@ -226,7 +226,7 @@ const App = () => {
                 </button>
               </div>
               <div className="h-64 md:h-96 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden border border-white/10 grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 shadow-inner">
-                <iframe src={MAPS_EMBED} title="Mapa de ubicacion del Salon My Father" className="w-full h-full border-0" allowFullScreen loading="lazy"></iframe>
+                <iframe src={MAPS_EMBED} title="Mapa de ubicacion del Salon My Father" className="w-full h-full border-0" allowFullScreen loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
               </div>
             </div>
 
@@ -288,7 +288,7 @@ const App = () => {
             </div>
 
             <div className="rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl border border-white/5">
-              <iframe src={SPOTIFY_EMBED_URL} title="Playlist de Spotify para los XV de Milagros" width="100%" height="450" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+              <iframe src={SPOTIFY_EMBED_URL} title="Playlist de Spotify para los XV de Milagros" width="100%" height="450" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
             </div>
           </div>
         </section>
