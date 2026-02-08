@@ -1,27 +1,20 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  MapPin, 
-  Calendar, 
-  Clock, 
-  Heart, 
+import {
+  MapPin,
+  Calendar,
+  Clock,
+  Heart,
   CheckCircle,
   Shirt,
   CalendarPlus,
-  Navigation,
   Music,
-  PlusCircle,
   Send,
-  X,
-  Search,
-  Loader2,
-  ImageIcon,
   Copy,
   ChevronDown,
   ExternalLink,
   Sparkles
 } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
 
 const EVENT_DATE = new Date('2026-08-22T21:00:00'); 
 const WHATSAPP_NUMBER = "59895239386"; 
@@ -96,17 +89,6 @@ const App = () => {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [guestName, setGuestName] = useState('');
   const [copiedAbitab, setCopiedAbitab] = useState(false);
-  
-  // Música
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-
-  // Cápsula de Recuerdos
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [iaCaption, setIaCaption] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Refs para Scroll
   const galaRef = useRef<HTMLDivElement>(null);
@@ -143,62 +125,6 @@ const App = () => {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64Data = reader.result as string;
-      setSelectedImage(base64Data);
-      analyzePhoto(base64Data);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const analyzePhoto = async (base64: string) => {
-    setIsAnalyzing(true);
-    setIaCaption('');
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const imagePart = {
-        inlineData: {
-          mimeType: "image/jpeg",
-          data: base64.split(',')[1]
-        },
-      };
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: {
-          parts: [
-            imagePart,
-            { text: "Eres un poeta experto. Mira esta foto y escribe una dedicatoria muy corta (máximo 10 palabras) para Milagros Cabrera que celebra sus XV años. Debe ser elegante y emotiva." }
-          ]
-        }
-      });
-      setIaCaption(response.text?.replace(/"/g, '') || "Un instante grabado en el alma.");
-    } catch (err) {
-      setIaCaption("Capturando la esencia de este gran momento.");
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  const handleSearchSongs = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!searchQuery.trim()) return;
-    setIsSearching(true);
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `Encuentra 3 canciones populares de fiesta para: "${searchQuery}". Devuelve solo JSON: [{"title": "...", "artist": "..."}]`,
-        config: { responseMimeType: "application/json" }
-      });
-      setSearchResults(JSON.parse(response.text || "[]"));
-    } catch (err) {
-      setSearchResults([{ title: searchQuery, artist: "Tu selección" }]);
-    } finally { setIsSearching(false); }
-  };
 
   if (!isOpened) {
     return (
@@ -318,56 +244,30 @@ const App = () => {
         {/* SECCIÓN 2: RECUERDOS */}
         <section ref={recuerdosRef} className="pt-10">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="font-serif text-4xl md:text-6xl italic mb-4">Cápsula de Recuerdos</h2>
-            <p className="text-silver/40 text-[10px] md:text-xs uppercase tracking-[0.4em] max-w-sm mx-auto">Comparte un momento especial con Milu</p>
+            <h2 className="font-serif text-4xl md:text-6xl italic mb-4">Galería de Momentos</h2>
+            <p className="text-silver/40 text-[10px] md:text-xs uppercase tracking-[0.4em] max-w-sm mx-auto">Momentos especiales de Milu</p>
           </div>
 
-          <div className="glass p-6 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border-white/10 text-center bg-gradient-to-tr from-white/[0.03] to-transparent">
-            {!selectedImage ? (
-              <div 
-                className="py-16 md:py-28 border-2 border-dashed border-white/10 rounded-[2.5rem] hover:border-bordeaux/50 transition-all duration-500 group cursor-pointer flex flex-col items-center" 
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <div className="w-20 h-20 md:w-28 md:h-28 bg-white/5 rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:bg-bordeaux/10 transition-all duration-500">
-                   <ImageIcon className="text-silver/20 group-hover:text-bordeaux transition-colors w-10 h-10 md:w-16 md:h-16" />
-                </div>
-                <p className="text-silver/50 text-[11px] md:text-sm uppercase tracking-[0.2em] mb-10 font-medium">Sube tu foto favorita con ella</p>
-                <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileChange} aria-label="Seleccionar foto" />
-                <button className="bg-white/10 px-10 md:px-14 py-4 md:py-6 rounded-full text-[10px] md:text-xs uppercase tracking-[0.4em] border border-white/20 font-bold hover:bg-white hover:text-black transition-all">
-                  SUBIR FOTO
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-8 md:space-y-12 animate-fade-in">
-                <div className="relative aspect-square md:aspect-video rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-white/10 bg-black shadow-2xl max-h-[500px] flex items-center justify-center">
-                  <img src={selectedImage} className="max-w-full max-h-full object-contain" alt="Foto de recuerdo seleccionada para compartir con Milagros" />
-                  {isAnalyzing && (
-                    <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center backdrop-blur-xl">
-                      <Loader2 className="text-bordeaux mb-6 animate-spin w-12 h-12 md:w-16 md:h-16" />
-                      <p className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-white/70 font-bold animate-pulse">Inspirando al poeta...</p>
-                    </div>
-                  )}
-                </div>
-                
-                {iaCaption && (
-                  <div className="p-8 md:p-14 bg-white/[0.04] rounded-[2rem] md:rounded-[3rem] border-l-4 border-bordeaux italic animate-fade-up relative">
-                    <Sparkles className="absolute top-4 right-6 opacity-10 text-bordeaux w-10 h-10" />
-                    <p className="text-silver/90 text-xl md:text-3xl font-serif leading-relaxed">"{iaCaption}"</p>
+          <div className="glass p-6 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border-white/10 bg-gradient-to-tr from-white/[0.03] to-transparent">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {PHOTOS.map((photo, index) => (
+                <div key={index} className="relative aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-white/10 bg-black shadow-2xl hover:shadow-[0_0_40px_rgba(109,11,11,0.5)] transition-all duration-500 group cursor-pointer">
+                  <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover filter brightness-75 group-hover:brightness-90 transition-all duration-500" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
+                    <p className="text-white text-sm md:text-base text-center px-4 font-serif italic">{photo.alt}</p>
                   </div>
-                )}
-
-                <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-                  <button onClick={() => {setSelectedImage(null); setIaCaption('');}} 
-                    className="flex-1 glass py-5 md:py-7 rounded-2xl md:rounded-3xl text-[10px] md:text-xs uppercase tracking-widest font-bold hover:bg-white/10 transition-colors border border-white/10">
-                    ELEGIR OTRA
-                  </button>
-                  <button onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`📸 ¡Milu! Te subí un recuerdo: "${iaCaption}"`)}`, '_blank')} 
-                    className="flex-[2] bg-bordeaux text-white py-5 md:py-7 rounded-2xl md:rounded-3xl font-bold text-[10px] md:text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-4 shadow-xl hover:scale-[1.02] transition-all">
-                    <Send size={20} className="md:w-6 md:h-6" /> ENVIAR A MILU
-                  </button>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
+
+            <div className="mt-12 md:mt-16 text-center">
+              <button
+                onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('¡Hola Milu! Tus fotos en los XV están hermosas')}`, '_blank')}
+                aria-label="Enviar mensaje a Milagros via WhatsApp (abre en nueva ventana)"
+                className="bg-bordeaux text-white px-10 md:px-16 py-5 md:py-7 rounded-2xl md:rounded-3xl font-bold text-[10px] md:text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-4 shadow-xl hover:scale-[1.02] transition-all mx-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                <Send size={20} className="md:w-6 md:h-6" aria-hidden="true" /> COMPARTIR CON MILU
+              </button>
+            </div>
           </div>
         </section>
 
@@ -379,44 +279,13 @@ const App = () => {
         {/* SECCIÓN 3: RITMO */}
         <section ref={musicaRef} className="pt-10">
           <div className="glass p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] border-white/10 bg-gradient-to-t from-white/[0.03] to-transparent">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 md:mb-16">
               <h2 className="font-serif text-4xl md:text-6xl italic mb-4">Playlist de la Noche</h2>
-              <p className="text-silver/40 text-[10px] md:text-xs uppercase tracking-[0.4em]">¿Qué canción quieres bailar?</p>
+              <p className="text-silver/40 text-[10px] md:text-xs uppercase tracking-[0.4em]">Temas para bailar</p>
             </div>
 
-            <form onSubmit={handleSearchSongs} className="relative mb-12 group" role="search">
-              <label htmlFor="song-search" className="sr-only">Buscar canciones</label>
-              <input 
-                id="song-search"
-                type="text" 
-                value={searchQuery} 
-                onChange={(e) => setSearchQuery(e.target.value)} 
-                placeholder="Busca tu tema favorito..." 
-                className="w-full bg-white/[0.05] border border-white/10 rounded-full px-8 md:px-12 py-5 md:py-7 focus:outline-none focus:border-bordeaux focus:ring-2 focus:ring-bordeaux/50 text-white text-sm md:text-lg transition-all shadow-inner tracking-wide" 
-              />
-              <button type="submit" aria-label="Buscar cancion" className="absolute right-3 top-2.5 md:top-3 w-12 h-12 md:w-16 md:h-16 bg-bordeaux rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                {isSearching ? <Loader2 size={24} className="animate-spin" aria-hidden="true" /> : <Search size={28} className="md:w-8 md:h-8" aria-hidden="true" />}
-              </button>
-            </form>
-
-            <div className="space-y-4 md:space-y-6 mb-16">
-              {searchResults.map((song, i) => (
-                <div key={i} className="flex items-center justify-between p-6 md:p-8 bg-white/[0.03] rounded-[2rem] md:rounded-[3rem] border border-white/5 hover:bg-white/[0.08] transition-all animate-fade-in shadow-xl group">
-                  <div className="text-left overflow-hidden pr-4">
-                    <p className="text-white text-base md:text-xl font-bold truncate tracking-wide">{song.title}</p>
-                    <p className="text-silver/40 text-[10px] md:text-sm uppercase tracking-widest mt-1 md:mt-2 font-medium">{song.artist}</p>
-                  </div>
-                  <button onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=Sugiero+el+tema+${song.title}+de+${song.artist}+para+tus+15`, '_blank')} 
-                    className="text-bordeaux hover:scale-125 transition-transform shrink-0"><PlusCircle size={36} className="md:w-12 md:h-12" /></button>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-16 border-t border-white/10">
-              <p className="text-silver/30 text-[10px] md:text-xs uppercase tracking-[0.6em] mb-12 text-center font-bold">SONIDOS QUE NOS INSPIRAN</p>
-              <div className="rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl border border-white/5">
-                <iframe src={SPOTIFY_EMBED_URL} title="Playlist de Spotify para los XV de Milagros" width="100%" height="450" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-              </div>
+            <div className="rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl border border-white/5">
+              <iframe src={SPOTIFY_EMBED_URL} title="Playlist de Spotify para los XV de Milagros" width="100%" height="450" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
           </div>
         </section>

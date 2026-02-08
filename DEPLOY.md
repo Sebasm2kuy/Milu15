@@ -40,16 +40,6 @@ Después de desplegar, ve a tu repositorio en GitHub:
 
 Tu sitio estará en: `https://Sebasm2kuy.github.io/Milu15/`
 
-## Nota Importante sobre API Keys
-
-El archivo `.env` NO se sube a GitHub por seguridad (está en `.gitignore`).
-
-Las funcionalidades de IA (búsqueda de música y análisis de fotos) solo funcionarán localmente.
-
-Para que funcionen en producción, considera usar:
-- Vercel (con variables de entorno)
-- Netlify (con variables de entorno)
-- O crear un backend API separado
 
 ## Actualizar el Sitio
 

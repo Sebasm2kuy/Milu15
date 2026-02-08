@@ -11,8 +11,8 @@ Invitación digital elegante y moderna para el cumpleaños de 15 de Milagros Cab
 - ✨ Diseño elegante con tema bordeaux y negro
 - ⏱️ Cuenta regresiva en tiempo real
 - 📍 Integración con Google Maps
-- 🎵 Búsqueda de canciones con IA (Gemini)
-- 📸 Cápsula de recuerdos con análisis de fotos por IA
+- 🎵 Playlist de Spotify embebida
+- 📸 Galería de fotos
 - 📱 100% responsive (móvil y desktop)
 - ♿ Accesible (ARIA labels, navegación por teclado)
 
@@ -20,7 +20,6 @@ Invitación digital elegante y moderna para el cumpleaños de 15 de Milagros Cab
 
 - Node.js (versión 18 o superior)
 - Cuenta de GitHub
-- API Key de Google Gemini (para funcionalidades de IA)
 
 ## Configuración Local
 
@@ -29,19 +28,11 @@ Invitación digital elegante y moderna para el cumpleaños de 15 de Milagros Cab
    npm install
    ```
 
-2. **Configura las variables de entorno:**
-   - Copia el archivo `.env.example` a `.env`
-   - Obtén tu API key de Gemini en: https://aistudio.google.com/apikey
-   - Agrega tu API key en el archivo `.env`:
-     ```
-     GEMINI_API_KEY=tu_api_key_aqui
-     ```
-
-3. **Ejecuta el proyecto localmente:**
+2. **Ejecuta el proyecto localmente:**
    ```bash
    npm run dev
    ```
-   La aplicación estará disponible en `http://localhost:3000`
+   La aplicación estará disponible en `http://localhost:5173`
 
 ## Despliegue en GitHub Pages
 
@@ -82,9 +73,13 @@ Tu sitio estará disponible en: **https://Sebasm2kuy.github.io/Milu15/**
    git remote set-url origin https://github.com/Sebasm2kuy/Milu15.git
    ```
 
-**Sobre las funcionalidades de IA:**
 
-Por seguridad, NO subas tu API key al repositorio. Las funcionalidades de IA (búsqueda de música y análisis de fotos) funcionarán SOLO localmente a menos que uses una solución serverless como Vercel o Netlify.
+## Cambios Recientes
+
+✅ Removido: Google Gemini AI (reduce tamaño del bundle)
+✅ Simplificado: Sección de música (solo Spotify embed)
+✅ Actualizado: Galería de fotos mejorada
+✅ Optimizado: Tamaño del bundle (67KB gzip, antes 121KB)
 
 ## Personalización
 
@@ -96,6 +91,7 @@ Edita las constantes en `App.tsx`:
 const EVENT_DATE = new Date('2026-08-22T21:00:00');
 const WHATSAPP_NUMBER = "59895239386";
 const EVENT_ADDRESS = "Granaderos 3875, 12300 Montevideo";
+const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/...";
 ```
 
 ### Cambiar Fotos
@@ -116,7 +112,8 @@ Reemplaza las imágenes en `public/photos/`:
 
 - React 19 + TypeScript
 - Vite + Tailwind CSS
-- Google Gemini AI
+- Spotify Web Embed
+- Google Maps Embed
 - gh-pages
 
 ---
